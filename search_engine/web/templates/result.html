@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title> {{ keywords }} - Search </title>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" style="padding: 1rem;text-align:center;">
+                <form action="{{ url_for('view.result') }}" method="get">
+                    <div class="input-group" style="font-size: 14px;">
+
+                        <label style="width:100%">
+                            <div style="max-width: 584px; width: 100% ;position: absolute;">
+                                <input type="text" class="form-control" name="keywords" style="width: 100% ;position: absolute;border-radius: 24px;" value="{{ keywords }}">
+                                {#<button style="position: absolute;top: 7px;right: 5px;background-color: #fff;border: none;outline: none;">Search History</button>#}
+                            </div>
+                            <button class="btn btn-outline-dark" type="submit">Search</button>
+                        </label>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9" style="padding: 1rem; font-family: Google Sans,arial,sans-serif;">
+                <div id="result-stats" style="font-size:14px">About {{ len_results }} results
+                    <nobr> in {{ cost_time }} seconds.&nbsp;</nobr>&nbsp;<a href="{{ url_for('view.advanced', keywords = keywords) }}" style="font-size:14px">Advanced</a>
+                </div>
+                <br/>
+                {% for result in results %}
+                    <div style="padding: 0 0 1rem 0">
+                        <a href="{{ result[1] }}" style="font-size:18px">{{ result[0] }}</a><br/>
+                        {% if result[2]!="" %}
+                            <span style="font-size:14px">{{ result[2] }}</span><br/>
+                        {% endif %}
+                        <a href="{{ result[1] }}" style="font-size:12px;color: #626675;">{{ result[1] }}</a>
+                        &nbsp;&nbsp;<span style="font-size:12px;color: #626675;">{{ result[3] }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-3" style="padding: 2rem 0 0 0; font-family: Google Sans,arial,sans-serif;">
+                {% if recommend_list %}
+                    <div class="row" style="padding-left:1.5rem">
+                        <div class="col-md-12" style="max-width:584px;margin: 0 auto"><h6 style="text-align:left">Recommendation</h6></div>
+                        <br/>
+                        <div class="row">
+                            <div style="max-width:584px;margin: 0 auto;float:left;position: relative;">
+                                {% for i in recommend_list %}
+                                    <div style="padding: 5px;float:left;">
+                                        <a href="{{ url_for('view.result', keywords=i) }}" class="btn btn-outline-secondary"
+                                           style="width: 100% ;max-width: 584px;border-radius: 24px;margin: 0 auto">{{ i }}</a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                {% endif %}
+                {% if search_history %}
+                    <div class="row" style="padding-left:1.5rem">
+                        <div class="col-md-12" style="max-width:584px;margin: 0 auto"><h6 style="text-align:left">Search History</h6></div>
+                        <br/>
+                        <div class="row">
+                            <div style="max-width:584px;margin: 0 auto;float:left;position: relative;">
+                                {% for i in search_history %}
+                                    <div style="padding: 5px;float:left;">
+                                        <a href="{{ url_for('view.result', keywords=i) }}" class="btn btn-outline-secondary"
+                                           style="width: 100% ;max-width: 584px;border-radius: 24px;margin: 0 auto">{{ i }}</a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

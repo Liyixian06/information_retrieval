@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form,render_hidden_errors,render_form_row %}
+{% from 'bootstrap5/utils.html' import render_messages %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <h3>Advanced</h3>
+            <hr/>
+            <form method="POST">
+                {{ render_messages() }}
+                {{ render_hidden_errors(form) }}
+                {{ form.csrf_token }}
+                <div class="row">
+                    <div class="col-8">{{ render_form_row([form.search_words],form_type ="horizontal") }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-8">{{ render_form_row([form.and_words],form_type ="horizontal") }}</div>
+                    <div class="col-4 col-form-label">add "AND" between the desired words (table AND chair)</div>
+                </div>
+                <div class="row">
+                    <div class="col-8">{{ render_form_row([form.or_words],form_type ="horizontal") }}</div>
+                    <div class="col-4 col-form-label">add "OR" between the desired words (table OR desk)</div>
+                </div>
+                <div class="row">
+                    <div class="col-8">{{ render_form_row([form.no_words],form_type ="horizontal") }}</div>
+                    <div class="col-4 col-form-label">add a minus sign "-" before an unwanted word (-2023)</div>
+                </div>
+                <div class="row">
+                    <div class="col-8">{{ render_form_row([form.site],form_type ="horizontal") }}</div>
+                    <div class="col-4 col-form-label">search within a web site (wikipedia.org) or domain (.edu, .org, .gov)</div>
+                </div>
+                <div class="row">
+                    <div class="col-8">{{ render_form_row([form.time],form_type ="horizontal") }}</div>
+                    <div class="col-4 col-form-label">search for webpage updated in the specified time</div>
+                </div>
+                <div class="row">
+                    <div class="col-8">{{ render_form_row([form.title_only],form_type ="horizontal") }}</div>
+                    <div class="col-4 col-form-label">search in full webpage / title only</div>
+                </div>
+                {{ render_form_row([form.submit]) }}
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width. initial-scale=1.0">
+        {% block title %}
+            <title>Search Engine</title>
+        {% endblock %}
+        {% block styles %}
+            {{ bootstrap.load_css() }}
+        {% endblock %}
+    {% endblock %}
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+    {% block scripts %}
+        {{ bootstrap.load_js() }}
+    {% endblock %}
+    {% block script_add %}
+    {% endblock %}
+</body>
+</html>
