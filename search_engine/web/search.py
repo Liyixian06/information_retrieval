@@ -61,10 +61,12 @@ def search(input_keyword: str, search_history: str, is_title_only: bool = False)
         for word, word_tf_idf in input_tf_idf.items():
             if word in tf_idf_dict:
                 sim += word_tf_idf * tf_idf_dict[word]
-        # 加入搜索历史，按 0.03 的权重进行个性化搜索
-        for word, word_tf_idf in history_tf_idf.items():
-            if word in tf_idf_dict:
-                sim += word_tf_idf * tf_idf_dict[word] * 0.03
+        # 此处必须先判断是否为零
+        # 如果不判断就添加搜索历史的权重，就会出现一种情况：某个页面和搜索关键词的相似度为零，但包含了某些搜索历史，它也会出现在结果里，但用户并不需要
+        if sim!=0:
+            for word, word_tf_idf in history_tf_idf.items():
+                if word in tf_idf_dict:
+                    sim += word_tf_idf * tf_idf_dict[word] * 0.03
         sim /= util_doc_len[url] # 先前已经计算过的文档向量长度直接拿来用
         # 余弦相似度和 pagerank 取调和平均
         if url in page_rank.index:

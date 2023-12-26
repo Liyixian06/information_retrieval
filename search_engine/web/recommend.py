@@ -33,17 +33,17 @@ def recommend(results, keywords):
         for word, weight in tmp_tags:
             if word not in extract_tags:
                 # 因为这里的 weight 是提取的关键词对所在文档的权重，还要乘以文档本身和 query 的相似度
-                extract_tags[word] = res[4]*weight*3 # 标题的权重是内容的3倍
+                extract_tags[word] = res[4]*weight
             else:
-                extract_tags[word] += res[4]*weight*3
+                extract_tags[word] += res[4]*weight
         content = webpage.loc[res[1],'content']
         if not pd.isna(content):
             tmp_tags = jieba.analyse.extract_tags(content, topK=20, withWeight=True)
             for word, weight in tmp_tags:
                 if word not in extract_tags:
-                    extract_tags[word] = res[4]*weight*3
+                    extract_tags[word] = res[4]*weight
                 else:
-                    extract_tags[word] += res[4]*weight*3
+                    extract_tags[word] += res[4]*weight
 
     # 剔除搜索的关键词
     for word in split_keyword:
