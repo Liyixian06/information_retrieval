@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask
 from flask_bootstrap import Bootstrap5
 from public_index import *
 from views import view_blue

@@ -11,9 +11,8 @@ with open(path + '/freq/idf.json', 'r', encoding='utf-8') as f:
 with open(path + '/freq/tf-idf.json', 'r', encoding='utf-8') as f:
     tf_idf = json.load(f)
 
-with open(path + '/freq/word_freq.json', 'r', encoding='utf-8') as f:
-    word_freq = json.load(f)
-    word_set = sorted(set(word_freq.keys()))
+with open(path + '/freq/word_set.json', 'r', encoding='utf-8') as f:
+    word_set = json.load(f)
 
 with open(path + '/freq/doc_len.json', 'r', encoding='utf-8') as f:
     doc_len = json.load(f)
@@ -24,9 +23,8 @@ with open(path + '/freq/idf_title.json', 'r', encoding='utf-8') as f:
 with open(path + '/freq/tf-idf_title.json', 'r', encoding='utf-8') as f:
     tf_idf_title = json.load(f)
 
-with open(path + '/freq/word_freq_title.json', 'r', encoding='utf-8') as f:
-    word_freq_title = json.load(f)
-    word_set_title = sorted(set(word_freq_title.keys()))
+with open(path + '/freq/word_set_title.json', 'r', encoding='utf-8') as f:
+    word_set_title = json.load(f)
 
 with open(path + '/freq/doc_len_title.json', 'r', encoding='utf-8') as f:
     doc_len_title = json.load(f)

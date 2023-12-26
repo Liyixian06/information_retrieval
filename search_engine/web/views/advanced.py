@@ -34,6 +34,7 @@ def advanced():
             search_history = []
         
         search_words = form.search_words.data
+        # 初步检索
         if form.title_only.data == 'Title only':
             is_title_only = True
         else:
@@ -47,7 +48,7 @@ def advanced():
                 url_date = url_date.strftime('%Y-%m-%d %H:%M:%S')
                 url_content = webpage.loc[url, 'content']
                 url_description = ''
-                if pd.isna(url_content) is False:
+                if not pd.isna(url_content):
                     url_description = url_content[:(140 if 140 < len(url_content) else len(url_content)-1)] + '…'
                 final_result.append((url_title, url, url_description, url_date, score))
             recommend_list = recommend(final_result, search_words)
@@ -55,9 +56,11 @@ def advanced():
             cost_t = f'{time.perf_counter()-t: .2f}'
             return render_template('no_result.html', keywords=search_words, cost_time=cost_t)
         
+        # 再按照高级检索的选项筛选
         filter_list = []
         for res in final_result:
-            filter_list.append(advanced_search(form, res[1]))
+            if not advanced_search(form, res[1]):
+                filter_list.append(res[1])
         final_result = [res for res in final_result if res[1] not in filter_list]
 
         cost_t = f'{time.perf_counter()-t: .2f}'
